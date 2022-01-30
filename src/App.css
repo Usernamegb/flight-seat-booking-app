@@ -36,3 +36,30 @@
     transform: rotate(360deg);
   }
 }
+
+.blueBackground {
+  background-image: linear-gradient(rgb(4, 4, 49), rgb(6, 6, 139));
+}
+.height-5 {
+  height: 8rem;
+}
+.height-100 {
+  height: 100vh;
+}
+.backImage {
+  background-image: linear-gradient(
+      rgba(14, 14, 15, 0.9),
+      rgba(147, 147, 172, 0.5)
+    ),
+    url("./images/Background.jpg");
+  object-fit: cover;
+  background-position: center;
+  background-size: cover;
+}
+h2 {
+  color: white;
+}
+.searchBoxInput {
+  height: 4.4rem;
+  width: 53rem;
+}
