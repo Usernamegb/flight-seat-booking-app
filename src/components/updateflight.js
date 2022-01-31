@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Navbars from "./navbar";
+import Swal from "sweetalert2";
 function UpdateFlightInfo() {
+    let a = JSON.parse(localStorage.getItem("oneflight"));
+    console.log(a)
+
+
     const [ flightNo, setFlightNo ] = useState("");
-    const [ flightName, setFlightName ] = useState("");
-    const [ sourceStation, setSourceStation ] = useState("");
-    const [ destStation, setDestStation ] = useState("");
-    const [ deptTime, setDeptTime ] = useState("");
-    const [ destTime, setDestTime ] = useState("");
-    const [ noSeats, setNoSeats ] = useState("");
-    const [ ticketPrice, setTicketPrice ] = useState("");
+    const [ flightName, setFlightName ] = useState(a.flightName);
+    const [ sourceStation, setSourceStation ] = useState(a.fromD);
+    const [ destStation, setDestStation ] = useState(a.toD);
+    const [ deptTime, setDeptTime ] = useState(a.deptTime);
+    const [ destTime, setDestTime ] = useState(a.destTime);
+    const [ noSeats, setNoSeats ] = useState(a.noSeats);
+    const [ ticketPrice, setTicketPrice ] = useState(a.ticketPrice);
     let nos = JSON.parse(sessionStorage.getItem("updateId"));
     const changeFlightName = (event) => {
         setFlightName(event.target.value);
@@ -53,7 +58,11 @@ function UpdateFlightInfo() {
             noSeats == "" ||
             ticketPrice == ""
         ) {
-            alert("Enter all feilds");
+            Swal.fire({
+                icon: "error",
+                title: "Enter all feilds",
+                text: "fail",
+            });
         } else {
             let flight = {
                 flightNo: nos,
@@ -69,9 +78,17 @@ function UpdateFlightInfo() {
             let status = await axios.post("http://localhost:8080/add-flight", flight);
 
             if (status) {
-                alert("sucess");
+                Swal.fire({
+                    icon: "success",
+                    title: "Flight Updated",
+                    text: "Success",
+                });
             } else {
-                alert("fail");
+                Swal.fire({
+                    icon: "error",
+                    title: "Oh No!!",
+                    text: "Server is down",
+                });
             }
         }
         setFlightName("");
@@ -86,10 +103,10 @@ function UpdateFlightInfo() {
     return (
         <>
             <Navbars />
-            <div className="container bg-warning height-100 p-5 rounded">
+            <div className="container bg-primary height-100 p-5 rounded">
                 <div className="row mb-5">
                     <div className="col alert alert-primary fs-1 text-center">
-                        Add Flight Details
+                        Update Flight Details
                     </div>
                 </div>
                 <div class="row justify-content-center">

@@ -19,7 +19,7 @@ function Register() {
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-
+  const [selectedFile, setSelectedFile] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -27,10 +27,31 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    let c = JSON.stringify(sessionStorage.getItem("ok"));
+    console.log(c);
     setFormErrors(validate(formValues));
-    setIsSubmit(true);
 
+    console.log(formErrors);
+
+    if (
+      formErrors.email != null ||
+      formErrors.fName != null ||
+      formErrors.lname != null ||
+      formErrors.mobNo != null ||
+      formErrors.password != null
+    ) {
+      console.log("set is false");
+      setIsSubmit(false);
+    } else {
+      setIsSubmit(true);
+    }
+
+    let inpu = document.getElementById("inputType");
+    if (inpu.value == "") {
+      console.log("workinggggggggggggg");
+      alert("Enter a valid captcha");
+      setIsSubmit(false);
+    }
     if (isSubmit) {
       const url = "http://localhost:8080/add-user";
       const body = {
@@ -42,23 +63,57 @@ function Register() {
       };
       console.log(body);
       if (await axios.post(url, body)) {
-        setFormValues("");
-
         console.log("working");
         Swal.fire({
           icon: "success",
           title: "Registered",
           text: "You have Succesfully been registered",
         });
-        navigate("/login");
       } else {
         Swal.fire({
-          icon: "success",
-          title: "Registered",
-          text: "You have Succesfully been registered",
+          icon: "error",
+          title: "Try again",
+          text: "Enter valid details",
         });
-        navigate("/login");
       }
+    }
+  };
+
+  const upload = async (e) => {
+    e.preventDefault();
+    console.log(selectedFile);
+    let loginData = {
+      email: formValues.email,
+      userPassword: formValues.password,
+    };
+    console.log(selectedFile);
+    const url = "http://localhost:8080/get-logindetails";
+
+    let userData = await axios.post(url, loginData);
+    let user = userData.data;
+    console.log(user);
+    const formData = new FormData();
+    formData.append("customerId", user.userId);
+    formData.append("profilePic", selectedFile);
+    console.log(formData);
+    let status = await axios.post(
+      "http://localhost:8080/upload-profile-pic",
+      formData
+    );
+    console.log(status);
+    if (status.data) {
+      Swal.fire({
+        icon: "success",
+        title: "Pic Uploaded",
+        text: "You have Succesfully uploaded pic",
+      });
+      navigate("/login");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Sorry!!! Try again",
+        text: "Pic Not uploaded",
+      });
     }
   };
 
@@ -67,7 +122,7 @@ function Register() {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(formValues);
     }
-  }, [formErrors]);
+  }, []);
 
   const validate = (values) => {
     const errors = {};
@@ -108,6 +163,14 @@ function Register() {
     }
     return errors;
   };
+  const getFile = (e) => {
+    console.log("pring");
+    console.log(e.target.files[0]);
+    console.log(selectedFile);
+
+    console.log(setSelectedFile(e.target.files[0]));
+    console.log(selectedFile);
+  };
 
   return (
     // <div className="container-fluid ">
@@ -121,7 +184,7 @@ function Register() {
 
       <div className="container-fluid">
         <div
-          className="row justify-content-center align-items-center bg-dark"
+          className="row justify-content-center align-items-center  backgroundImg"
           style={{ height: "100vh" }}
         >
           {" "}
@@ -207,6 +270,18 @@ function Register() {
                   {/* </Link> */}
                 </div>
               </div>
+            </form>
+            <form onSubmit={upload}>
+              <label htmlFor="" className=" mt-3 fs-2">
+                Upload your profile pic
+              </label>
+              <br></br>
+              <input type="file" onChange={getFile} />
+              <input
+                type="submit"
+                value="Submit"
+                className="form-control my-1 bg-primary text-light"
+              />
             </form>
           </div>
         </div>

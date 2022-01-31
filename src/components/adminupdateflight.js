@@ -10,6 +10,18 @@ function UpdateFlight() {
 
   const updateFlight = (e) => {
     sessionStorage.setItem("updateId", e.target.id);
+
+    let a;
+    const access = async () => {
+      let id = JSON.parse(sessionStorage.getItem("updateId"));
+      let body = { flightNo: id };
+      let b = await axios.post("http://localhost:8080/get-flight", body);
+      a = b.data;
+      console.log(a.flightName);
+      localStorage.setItem("oneflight", JSON.stringify(a));
+    };
+    access();
+
     navigate("/update");
   };
   const deleteUser = (id) => {
@@ -71,22 +83,34 @@ function UpdateFlight() {
         </div>
         <div className="row">
           <div className="col-1">
-            <div className="alert alert-primary fs-1 text-center">No</div>
+            <div className="alert bg-primary text-light fs-1 text-center">
+              No
+            </div>
           </div>
           <div className="col-2">
-            <div className="alert alert-primary fs-1 text-center">Name</div>
+            <div className="alert bg-primary text-light fs-1 text-center">
+              Name
+            </div>
           </div>
           <div className="col-2">
-            <div className="alert alert-primary fs-1 text-center">DTime</div>
+            <div className="alert bg-primary text-light fs-1 text-center">
+              DTime
+            </div>
           </div>
           <div className="col-2">
-            <div className="alert alert-primary fs-1 text-center">ATime</div>
+            <div className="alert bg-primary text-light fs-1 text-center">
+              ATime
+            </div>
           </div>
           <div className="col-2">
-            <div className="alert alert-primary fs-1 text-center">Price</div>
+            <div className="alert bg-primary text-light fs-1 text-center">
+              Price
+            </div>
           </div>
           <div className="col-1">
-            <div className="alert alert-primary fs-1 text-center">Seats</div>
+            <div className="alert bg-primary text-light fs-1 text-center">
+              Seats
+            </div>
           </div>
         </div>
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Navbars from "./navbar";
+import Swal from "sweetalert2";
 function AddFlight() {
   const [flightNo, setFlightNo] = useState("");
   const [flightName, setFlightName] = useState("");
@@ -53,7 +54,10 @@ function AddFlight() {
       noSeats == "" ||
       ticketPrice == ""
     ) {
-      alert("Enter all feilds");
+      Swal.fire({
+        icon: "error",
+        title: "Try again",
+      });
     } else {
       let flight = {
         flightName: flightName,
@@ -68,9 +72,17 @@ function AddFlight() {
       let status = await axios.post("http://localhost:8080/add-flight", flight);
 
       if (status) {
-        alert("sucess");
+        Swal.fire({
+          icon: "success",
+          title: "Flight Added!!!",
+          text: "You have been successfully added flight",
+        });
       } else {
-        alert("fail");
+        Swal.fire({
+          icon: "error",
+          title: "Try again",
+          text: "Flight Not Added!!!",
+        });
       }
     }
     setFlightName("");

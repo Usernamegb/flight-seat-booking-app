@@ -21,25 +21,35 @@ function FlightList(props) {
         <div className="row">
           <div className="col-12">
             <div className="alert bg-warning fs-1 text-center">
-              Avilable Flights
+              Available Flights
             </div>
           </div>
         </div>
         <div className="row">
           <div className="col-2">
-            <div className="alert alert-primary fs-1 text-center">No</div>
+            <div className="alert bg-primary text-light blueBackground fs-1 text-center">
+              No
+            </div>
           </div>
           <div className="col-2">
-            <div className="alert alert-primary fs-1 text-center">Name</div>
+            <div className="alert bg-primary text-light blueBackground fs-1 text-center">
+              Name
+            </div>
           </div>
           <div className="col-2">
-            <div className="alert alert-primary fs-1 text-center">DTime</div>
+            <div className="alert bg-primary text-light blueBackground fs-1 text-center">
+              DTime
+            </div>
           </div>
           <div className="col-2">
-            <div className="alert alert-primary fs-1 text-center">ATime</div>
+            <div className="alert bg-primary text-light blueBackground fs-1 text-center">
+              ATime
+            </div>
           </div>
           <div className="col-2">
-            <div className="alert alert-primary fs-1 text-center">Price</div>
+            <div className="alert bg-primary text-light blueBackground fs-1 text-center">
+              Price
+            </div>
           </div>
         </div>
 
