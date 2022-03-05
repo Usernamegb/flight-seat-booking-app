@@ -36,7 +36,12 @@
     transform: rotate(360deg);
   }
 }
-
+.b {
+  background-image: linear-gradient(rgb(10, 29, 1), rgb(125, 235, 171));
+}
+.a {
+  background-image: linear-gradient(rgb(153, 153, 238), rgb(2, 2, 37));
+}
 .blueBackground {
   background-image: linear-gradient(rgb(4, 4, 49), rgb(6, 6, 139));
 }
@@ -62,4 +67,27 @@ h2 {
 .searchBoxInput {
   height: 4.4rem;
   width: 53rem;
+}
+.back {
+  background-image: linear-gradient(
+    rgba(35, 35, 245, 0.9),
+    rgba(2, 2, 44, 0.5)
+  );
+}
+.im {
+  background-image: url("./images/patrick-tomasso-QMDap1TAu0g-unsplash.jpg");
+  object-fit: cover;
+  background-position: center;
+  background-size: cover;
+}
+
+.backgroundImg {
+  background-image: linear-gradient(
+      rgba(14, 14, 15, 0.9),
+      rgba(147, 147, 172, 0.5)
+    ),
+    url("./images/blake-wisz-Xn5FbEM9564-unsplash.jpg");
+  object-fit: cover;
+  background-position: center;
+  background-size: cover;
 }

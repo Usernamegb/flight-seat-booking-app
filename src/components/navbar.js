@@ -13,6 +13,7 @@ function Navbars() {
   const myCon = useRef("");
   const [login, setlogin] = useState("Login");
   const [register, setregister] = useState("Register");
+  const [profileS, setprofileS] = useState("Profile");
   const checkRoll = () => {
     if (sessionStorage.getItem("user") == 1) {
       console.log(sessionStorage.getItem("user"));
@@ -25,6 +26,7 @@ function Navbars() {
       if (!contanerupd.classList.contains("d-none")) {
         contanerupd.classList.add("d-none");
       }
+
       setlogin("logout");
       setregister("");
     } else if (sessionStorage.getItem("user") == 0) {
@@ -38,19 +40,29 @@ function Navbars() {
     } else {
       const contaneradd = document.getElementById("add");
       const contanerupd = document.getElementById("update");
+      const contanerpro = document.getElementById("Profile");
       if (!contaneradd.classList.contains("d-none")) {
         contaneradd.classList.add("d-none");
       }
       if (!contanerupd.classList.contains("d-none")) {
         contanerupd.classList.add("d-none");
       }
-
+      if (!contanerpro.classList.contains("d-none")) {
+        contanerpro.classList.add("d-none");
+      }
+      setprofileS("");
       setlogin("Login");
       setregister("Register");
     }
   };
   const logout = () => {
     sessionStorage.removeItem("user");
+    sessionStorage.removeItem("updatedId");
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("flightId");
+    localStorage.removeItem("allflights");
+    localStorage.removeItem("allpass");
+    localStorage.removeItem("flights");
   };
   useEffect(() => {
     checkRoll();
@@ -64,6 +76,15 @@ function Navbars() {
 
     console.log(allFlight);
     localStorage.setItem("allflights", JSON.stringify(allFlight.data));
+  };
+
+  const profile = async () => {
+    let id = JSON.parse(sessionStorage.getItem("userId"));
+    let allpassenger = await axios.post("http://localhost:8080/getpassengers", {
+      userId: id,
+    });
+
+    localStorage.setItem("allpass", JSON.stringify(allpassenger.data));
   };
 
   return (
@@ -106,6 +127,15 @@ function Navbars() {
                 Update Flights{" "}
               </span>
             </Link>
+            <Link
+              id="Profile"
+              className="text-decoration-none text-light mx-2 fs-2"
+              onClick={profile}
+              to="/profile"
+            >
+              <span className="bg-primary rounded-pill p-2"> {profileS}</span>
+            </Link>
+
             <Link
               className="text-decoration-none text-light mx-2 fs-2"
               onClick={logout}

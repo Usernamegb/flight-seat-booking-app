@@ -16,7 +16,7 @@ function Captcha() {
         return result;
     }
     const captcha = generateString(6) // Function called here and save in captcha variable
-    let handleChange = (e) => {
+    let handleChang = (e) => {
         let name = e.target.name;
         let value = e.target.value;
         user[ name ] = value;
@@ -25,6 +25,7 @@ function Captcha() {
     const onSubmit = e => {
         var element = document.getElementById("succesBTN");
         var inputData = document.getElementById("inputType");
+
         element.style.cursor = "wait";
         element.innerHTML = "Checking...";
         inputData.disabled = true;
@@ -36,6 +37,7 @@ function Captcha() {
                 element.disabled = true;
                 element.style.cursor = "not-allowed";
                 inputData.style.display = "none";
+                sessionStorage.setItem("ok", "ok");
 
             }
             else {
@@ -74,7 +76,7 @@ function Captcha() {
                     </div>
                     <div class="text-center" >
                         <input type="text" style={{ marginLeft: "390px" }} id="inputType" className="btn ml-5 mb-3 mx-3" placeholder="Enter Captcha"
-                            name="username" onChange={handleChange} autocomplete="off" style={{ width: "20%" }}
+                            name="username" onChange={handleChang} autocomplete="off" style={{ width: "20%" }}
                         />
                         <button type="button" id="succesBTN" onClick={onSubmit} class="btn btn-primary ml-1 mb-3">Verify Captcha</button>
 
